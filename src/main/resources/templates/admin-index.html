@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
+        .btn { padding: 15px 30px; margin: 10px; font-size: 18px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; color: white; }
+        .btn-blue { background-color: #007bff; }
+        .btn-green { background-color: #28a745; }
+    </style>
+</head>
+<body>
+<h1>⚙️ Panneau Admin</h1>
+<div>
+    <a href="/products/admin" class="btn btn-blue">📦 Produits</a>
+    <a href="/articles/admin" class="btn btn-green">📝 Articles</a>
+</div>
+<br>
+<form th:action="@{/logout}" method="post">
+    <button type="submit" style="padding:10px 20px; background:red; color:white; border:none; border-radius:5px; cursor:pointer;">🚪 Déconnexion</button>
+</form>
+</body>
+</html>

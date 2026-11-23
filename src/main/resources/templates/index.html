@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil</title>
+    <style>
+        body { font-family: Arial; text-align: center;
+               padding: 50px; background: #f5f5f5; }
+        h1 { color: #333; }
+        .btn { display: inline-block; padding: 12px 24px; margin: 10px;
+               border-radius: 8px; text-decoration: none;
+               color: white; font-size: 16px; }
+        .btn-blue { background: #2196F3; }
+        .btn-green { background: #4CAF50; }
+        .btn-red { background: #f44336; }
+        .card { background: white; padding: 30px; border-radius: 10px;
+                display: inline-block; margin: 20px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+<h1>🏠 Bienvenue sur TP1</h1>
+
+<div class="card">
+    <h2>📋 Navigation</h2>
+    <a th:href="@{/products}" class="btn btn-blue">📦 Produits</a>
+    <a th:href="@{/articles}" class="btn btn-green">📝 Articles</a>
+</div>
+
+
+</body>
+</html>

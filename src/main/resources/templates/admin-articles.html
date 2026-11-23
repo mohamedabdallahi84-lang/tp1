@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Articles</title>
+    <style>
+        body { font-family: Arial; padding: 30px; background: #f5f5f5; }
+        .form-box { background: white; padding: 20px; border-radius: 8px;
+                    margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        input, textarea { padding: 8px; margin: 5px; border: 1px solid #ddd;
+                          border-radius: 4px; width: 250px; }
+        .card { background: white; padding: 20px; margin: 10px 0;
+                border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; }
+        .card-actions { display: flex; gap: 10px; }
+        .btn { padding: 8px 16px; border: none; border-radius: 6px;
+               cursor: pointer; color: white; font-size: 14px; }
+        .btn-blue { background: #2196F3; }
+        .btn-red { background: #f44336; }
+        .btn-green { background: #4CAF50; }
+        a { color: #2196F3; text-decoration: none; }
+        .modal { display: none; position: fixed; top: 0; left: 0;
+                 width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+                 justify-content: center; align-items: center; }
+        .modal.active { display: flex; }
+        .modal-box { background: white; padding: 30px;
+                     border-radius: 10px; width: 400px; }
+    </style>
+</head>
+<body>
+<a th:href="@{/admin}">← Accueil</a>
+<h1>⚙️ Gestion des Articles</h1>
+
+<!-- Ajouter -->
+<div class="form-box">
+    <h3>➕ Ajouter un article</h3>
+    <form th:action="@{/articles/admin/add}" method="post">
+        <input type="text" name="title" placeholder="Titre" required/><br/>
+        <textarea name="content" placeholder="Contenu..." rows="3"></textarea><br/>
+        <button type="submit" class="btn btn-green">Ajouter</button>
+    </form>
+</div>
+
+<!-- Liste -->
+<div th:each="article : ${articles}" class="card">
+    <div class="card-header">
+        <h3 th:text="${article.title}"></h3>
+        <div class="card-actions">
+            <button class="btn btn-blue"
+                    th:onclick="|openModal('modal-' + ${article.id})|">
+                ✏️ Modifier
+            </button>
+            <form th:action="@{/articles/admin/delete/{id}(id=${article.id})}" method="post" style="display:inline">
+                <button type="submit">🗑️ Supprimer</button>
+            </form>
+        </div>
+    </div>
+    <p th:text="${article.content}"></p>
+</div>
+
+<!-- Modals -->
+<div th:each="article : ${articles}"
+     th:id="|modal-${article.id}|"
+     class="modal">
+    <div class="modal-box">
+        <h3>✏️ Modifier l'article</h3>
+        <form th:action="@{/articles/admin/update/{id}(id=${article.id})}"
+              method="post">
+            <input type="text" name="title"
+                   th:value="${article.title}" required/><br/>
+            <textarea name="content"
+                      th:text="${article.content}"
+                      rows="4"></textarea><br/><br/>
+            <button type="submit" class="btn btn-blue">✅ Sauvegarder</button>
+            <button type="button" class="btn btn-red"
+                    th:onclick="|closeModal('modal-' + ${article.id})|">
+                ❌ Annuler
+            </button>
+        </form>
+    </div>
+</div>
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <a th:href="@{/}">← Accueil</a>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-red">🚪 Déconnexion</button>
+    </form>
+</div>
+<script>
+    function openModal(id) {
+        document.getElementById(id).classList.add('active');
+    }
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+</script>
+</body>
+</html>
